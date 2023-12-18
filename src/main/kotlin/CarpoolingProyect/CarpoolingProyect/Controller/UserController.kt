@@ -10,27 +10,27 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/client")
+@RequestMapping("/users")
 class UserController {
     @Autowired
     lateinit var userService: UserService
 
-    @GetMapping("/getAllUsers")
+    @GetMapping()
     fun getAll():ResponseEntity<*>{
         return ResponseEntity(userService.listAllUsers(),HttpStatus.OK)
     }
 
-    @PostMapping("/createUser")
+    @PostMapping()
     fun createUser(@RequestBody user:User):ResponseEntity<User>{
         return ResponseEntity(userService.saveUser(user),HttpStatus.OK)
     }
 
-    @PutMapping("/UpdateUser")
+    @PutMapping()
     fun updateUser(@RequestBody user:User):ResponseEntity<User>{
         return ResponseEntity(userService.update(user),HttpStatus.OK)
     }
 
-    @PatchMapping("/updateCellNumber")
+    @PatchMapping()
     fun updateName(@RequestBody user:User):ResponseEntity<User>{
         return ResponseEntity(userService.updateCellNumber(user),HttpStatus.OK)
     }
@@ -40,7 +40,7 @@ class UserController {
         return ResponseEntity(userService.listById(id),HttpStatus.OK)
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     fun deleteId(@PathVariable id:Long?):String{
         return userService.deleteId(id)
     }
