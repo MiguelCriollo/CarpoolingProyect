@@ -15,5 +15,5 @@ class Driver {
     var driverLicence: String? = null
     @NotBlank(message="Campo obligatorio") //validate
     @Column(name="user_id")
-    var userId: String?= null
+    var userId: Long?= null
 }
