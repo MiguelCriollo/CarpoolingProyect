@@ -2,6 +2,7 @@ package CarpoolingProyect.CarpoolingProyect.Service
 
 import CarpoolingProyect.CarpoolingProyect.Model.User
 import CarpoolingProyect.CarpoolingProyect.Repository.UserRepository
+import CarpoolingProyect.CarpoolingProyect.utils.HttpExceptionNotFound
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -38,6 +39,9 @@ class UserService {
         val response = userRepository.findById(id)?:throw Exception("Id no existe")
         return response
     }
+
+    fun findByEmail(email: String) = userRepository.findByEmail(email)?:
+    throw HttpExceptionNotFound("user not found")
 
     fun deleteId(id:Long?):String{
         try{

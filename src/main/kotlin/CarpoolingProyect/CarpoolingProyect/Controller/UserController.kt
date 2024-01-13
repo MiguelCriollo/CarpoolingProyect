@@ -17,12 +17,12 @@ class UserController {
 
     @GetMapping()
     fun getAll():ResponseEntity<*>{
-        return ResponseEntity(userService.listAllUsers(),HttpStatus.OK)
+        return ResponseEntity(userService.listAllUsers(), HttpStatus.OK)
     }
 
     @PostMapping()
     fun createUser(@RequestBody user:User):ResponseEntity<User>{
-        return ResponseEntity(userService.saveUser(user),HttpStatus.OK)
+        return ResponseEntity(userService.saveUser(user), HttpStatus.OK)
     }
 
     @PutMapping()
