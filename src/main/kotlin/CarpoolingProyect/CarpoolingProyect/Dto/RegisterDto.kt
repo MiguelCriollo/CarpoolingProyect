@@ -7,4 +7,5 @@ class RegisterDto {
     var password: String = ""
 
     var identification: String = ""
+    var role:String=""
 }

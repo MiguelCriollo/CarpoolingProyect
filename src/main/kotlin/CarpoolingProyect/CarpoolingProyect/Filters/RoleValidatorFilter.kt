@@ -29,7 +29,7 @@ class RoleValidatorFilter @Lazy @Autowired constructor(
         val userId = decodedToken.subject
         val user = userService.listById(userId.toLong())
 
-        val hasUserAccess = roles.contains("user")
+        val hasUserAccess = roles.contains(user.role)
 
         if(!hasUserAccess){
             throw HttpExceptionUnauthorized("the user doesn't have access")
