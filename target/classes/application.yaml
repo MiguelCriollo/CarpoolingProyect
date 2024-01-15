@@ -4,6 +4,10 @@ server:
     include-message: always
 #Configuracion de spring
 spring:
+  #Hot Swapping
+  devtools:
+    restart:
+      enabled: true
   #Configuracion de migracion
   flyway:
     enabled: true
@@ -18,5 +22,5 @@ spring:
   datasource:
     url: jdbc:postgresql://berry.db.elephantsql.com/ugdbyfys?socketTimeout=3
     username: ugdbyfys
-    password: cGwIEInpVx7Ze_BeMHTNXzeSf9GQNFMd
+    password: 97GKG3tqWnnSPH0HgeFYkGiM34CJZt1Z
     driverClassName: org.postgresql.Driver

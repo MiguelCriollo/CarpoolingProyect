@@ -1,7 +1,11 @@
 package CarpoolingProyect.CarpoolingProyect.Model
+import CarpoolingProyect.CarpoolingProyect.validation.Identification
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.Size
+import java.util.*
 
 @Entity
 @Table(name = "users")
@@ -10,23 +14,35 @@ class User {
     @Id
     @Column(updatable = false)
     var id: Long? = null
-    @NotBlank(message="Campo obligatorio") //validate
+
+    @NotBlank(message="Los nombres son obligatorios") //validate
     @Column(name="first_name")
-    var firstName: String? = null
-    @NotBlank(message="Campo obligatorio") //validate
+    var firstName: String = ""
+
+    @NotBlank(message="Los apellidos son Obligatorios") //validate
     @Column(name="last_name")
-    var lastName: String?= null
-    @NotBlank(message="Campo obligatorio") //validate
+    var lastName: String= ""
+
+    @NotBlank(message="El numero de Cedular es Obligatorio") //validate
+    @Size(min=10, max = 10, message = "Numero de Celular Invalido")
     @Column(name="cell_number")
-    var cellNumber: String? =null
+    var cellNumber: String =""
+
+    @NotBlank(message="El correo electronico es obligatorio") //validate
+    @Email(message="Correo no valido")
+    var email:String=""
+
+    //@field:Identification
     @NotBlank(message="Campo obligatorio") //validate
-    @Email(message="Correo Valido???Noze")
-    var email:String?=null
-    @NotBlank(message="Campo obligatorio") //validate
-    var password:String?=null
+    var password:String="null"
+
+
     @Column(name="is_driver")
-    var isDriver:Boolean?=false
-    @NotBlank(message="Campo obligatorio") //validate
-    @Column(name="identification")
-    var identification:String?=null
+    var isDriver:Boolean?=null;
+
+    @Size(min=10, max = 10, message = "Numero de Cedula Invalido")
+    @NotBlank(message="La cedula es obligatoria")
+    var identification:String=""
+
+    var status:String?="active";
 }
