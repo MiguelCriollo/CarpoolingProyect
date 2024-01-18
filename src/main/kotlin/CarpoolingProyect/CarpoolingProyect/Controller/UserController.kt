@@ -2,27 +2,29 @@ package CarpoolingProyect.CarpoolingProyect.Controller
 
 import CarpoolingProyect.CarpoolingProyect.Model.User
 import CarpoolingProyect.CarpoolingProyect.Service.UserService
-import ch.qos.logback.core.net.server.Client
+import jakarta.validation.Valid
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/users")
+@Validated
 class UserController {
     @Autowired
     lateinit var userService: UserService
 
     @GetMapping()
     fun getAll():ResponseEntity<*>{
-        return ResponseEntity(userService.listAllUsers(), HttpStatus.OK)
+        return ResponseEntity(userService.listAllUsers(),HttpStatus.OK)
     }
 
     @PostMapping()
-    fun createUser(@RequestBody user:User):ResponseEntity<User>{
-        return ResponseEntity(userService.saveUser(user), HttpStatus.OK)
+    fun createUser(@Valid @RequestBody user:User):ResponseEntity<User>{
+        return ResponseEntity(userService.saveUser(user),HttpStatus.OK)
     }
 
     @PutMapping()
