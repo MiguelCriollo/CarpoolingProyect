@@ -1,7 +1,11 @@
 package CarpoolingProyect.CarpoolingProyect.Controller
 
 import CarpoolingProyect.CarpoolingProyect.Model.User
+import CarpoolingProyect.CarpoolingProyect.Service.TokenService
 import CarpoolingProyect.CarpoolingProyect.Service.UserService
+import CarpoolingProyect.CarpoolingProyect.utils.getJwtCookie
+import jakarta.servlet.http.Cookie
+import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.Valid
 
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,8 +21,12 @@ class UserController {
     @Autowired
     lateinit var userService: UserService
 
+    @Autowired
+    lateinit var tokenService: TokenService
     @GetMapping()
-    fun getAll():ResponseEntity<*>{
+    fun getAll(requestServer:HttpServletRequest):ResponseEntity<*>{
+        var setso:Cookie=getJwtCookie(requestServer);
+        var decoded=tokenService.verify(setso.value)
         return ResponseEntity(userService.listAllUsers(),HttpStatus.OK)
     }
 
