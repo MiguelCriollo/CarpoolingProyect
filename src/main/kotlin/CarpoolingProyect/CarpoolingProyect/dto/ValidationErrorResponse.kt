@@ -1,4 +1,4 @@
-package CarpoolingProyect.CarpoolingProyect.dto
+package CarpoolingProyect.CarpoolingProyect.Dto
 data class ValidationErrorResponse(
     val timestamp: String,
     val status: Int,

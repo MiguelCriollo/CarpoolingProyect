@@ -16,7 +16,8 @@ class Driver {
     @Column(name="driver_licence")
     var driverLicence: String? = null
 
-    //@JsonIgnore
-    @Column(name="user_id")
-    var userId: Long?= null
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "user_id",referencedColumnName = "id")
+    var user:User?=null
 }

@@ -1,4 +1,5 @@
 package CarpoolingProyect.CarpoolingProyect.Model
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
@@ -54,4 +55,8 @@ class User {
     fun comparePassword(password: String): Boolean{
         return BCryptPasswordEncoder().matches(password, this.password)
     }
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "user",cascade = [CascadeType.ALL], orphanRemoval = true)
+    var driver:Driver?=null
 }

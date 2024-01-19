@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import java.util.Date
+import kotlin.jvm.Transient
 
 @Entity
 @Table(name = "route_stop")
@@ -18,11 +19,16 @@ class RouteStop {
     @Column(name="arrive_hour")
     var arriveHour: Date? = null
 
-    //@JsonIgnore
-    @Column(name="stop_id")
-    var stopId: Long? = null
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "stop_id")
+    var stop: Stop? = null
 
-    //@JsonIgnore
-    @Column(name = "route_id")
-    var routeId: Long? = null
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "route_id")
+    var route: Route? = null
+
+    @Transient
+    var routeId:Long?=null
 }

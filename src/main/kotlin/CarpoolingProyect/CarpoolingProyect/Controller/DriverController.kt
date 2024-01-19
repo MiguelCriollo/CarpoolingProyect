@@ -2,8 +2,11 @@ package CarpoolingProyect.CarpoolingProyect.Controller
 
 import CarpoolingProyect.CarpoolingProyect.Model.Driver
 import CarpoolingProyect.CarpoolingProyect.Service.DriverService
-import CarpoolingProyect.CarpoolingProyect.Service.UserService
-import ch.qos.logback.core.net.server.Client
+import CarpoolingProyect.CarpoolingProyect.Service.TokenService
+import CarpoolingProyect.CarpoolingProyect.Dto.BasicErrorResponse
+import CarpoolingProyect.CarpoolingProyect.utils.getJwtCookie
+import jakarta.servlet.http.Cookie
+import jakarta.servlet.http.HttpServletRequest
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -16,6 +19,9 @@ class DriverController {
     @Autowired
     lateinit var driverService: DriverService
 
+    @Autowired
+    lateinit var tokenService: TokenService
+
     @GetMapping()
     fun getAll():ResponseEntity<*>{
         return ResponseEntity(driverService.listAllUsers(),HttpStatus.OK)
@@ -26,6 +32,18 @@ class DriverController {
         return ResponseEntity(driverService.saveUser(user),HttpStatus.OK)
     }
 
+    @PostMapping("/createDriver")
+    fun createDriver(requestServer: HttpServletRequest, @RequestBody driver: Driver):ResponseEntity<BasicErrorResponse>{
+        var setso: Cookie = getJwtCookie(requestServer);
+        var decoded=tokenService.verify(setso.value).subject.toLong()
+        return ResponseEntity(driverService.createDriver(decoded,driver),HttpStatus.OK)
+    }
+
+    @GetMapping("/testDriver")
+    fun testDriver():ResponseEntity<String>{
+        driverService.testDriver()
+        return ResponseEntity("Allo",HttpStatus.OK)
+    }
     @PutMapping()
     fun updateUser(@RequestBody user:Driver):ResponseEntity<Driver>{
         return ResponseEntity(driverService.update(user),HttpStatus.OK)

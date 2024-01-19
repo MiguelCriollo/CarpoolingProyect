@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS users (
     first_name VARCHAR(200) NOT NULL,
     last_name VARCHAR(200) NOT NULL,
     cell_number VARCHAR(10),
-    email VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(200) NOT NULL,
     is_driver boolean DEFAULT FALSE,
     identification VARCHAR(10) NOT NULL UNIQUE,

@@ -27,4 +27,8 @@ class Route {
     //@JsonIgnore
     @Column(name="driver_id")
     var driverId:Long?=null
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "route",cascade = [CascadeType.ALL], orphanRemoval = true)
+    var routeStop:MutableSet<RouteStop> = mutableSetOf()
 }
