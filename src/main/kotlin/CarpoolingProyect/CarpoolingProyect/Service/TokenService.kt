@@ -1,8 +1,11 @@
 package CarpoolingProyect.CarpoolingProyect.Service
 
 import CarpoolingProyect.CarpoolingProyect.Global.SecretModule
+import CarpoolingProyect.CarpoolingProyect.utils.getJwtCookie
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
+import jakarta.servlet.http.Cookie
+import jakarta.servlet.http.HttpServletRequest
 import org.springframework.stereotype.Service
 
 
@@ -24,4 +27,9 @@ class TokenService {
             throw Error("invalid token")
         }
     }
+
+    fun getJwtId(requestServer: HttpServletRequest):Long{
+        return verify(getJwtCookie(requestServer).value).subject.toLong()
+    }
+
 }

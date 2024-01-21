@@ -1,12 +1,14 @@
 package CarpoolingProyect.CarpoolingProyect.Controller
 
 import CarpoolingProyect.CarpoolingProyect.Model.Route
+import CarpoolingProyect.CarpoolingProyect.Model.RouteStopRequest
 import CarpoolingProyect.CarpoolingProyect.Service.DriverService
 import CarpoolingProyect.CarpoolingProyect.Service.RouteService
 import CarpoolingProyect.CarpoolingProyect.Service.TokenService
 import CarpoolingProyect.CarpoolingProyect.utils.getJwtCookie
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletRequest
+import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -27,18 +29,21 @@ class RouteController {
 
     @GetMapping("/userRoutes")
     fun getUserRoutes(requestServer: HttpServletRequest):ResponseEntity<*>{
-        var jwt: Cookie = getJwtCookie(requestServer)
-        var decodedId=tokenService.verify(jwt.value).subject.toLong()
+        val decodedId= tokenService.getJwtId(requestServer)
         return ResponseEntity(routeService.listUserRoutes(decodedId),HttpStatus.OK)
     }
 
     @PostMapping()
     fun createRoute(@RequestBody route: Route,requestServer: HttpServletRequest): ResponseEntity<*> {
-        var jwt: Cookie = getJwtCookie(requestServer)
-        var decodedId=tokenService.verify(jwt.value).subject.toLong()
+        val decodedId= tokenService.getJwtId(requestServer)
         return ResponseEntity(routeService.saveRoute(route,decodedId), HttpStatus.OK)
     }
 
+    @PostMapping("/addRouteStops")
+    fun addRouteStops(@Valid @RequestBody routeStop: RouteStopRequest, requestServer: HttpServletRequest):ResponseEntity<*>{
+        val decodedId= tokenService.getJwtId(requestServer)
+        return ResponseEntity(routeService.addRouteStops(decodedId,routeStop),HttpStatus.OK)
+    }
 
     @PutMapping()
     fun updateUser(@RequestBody user: Route): ResponseEntity<Route> {

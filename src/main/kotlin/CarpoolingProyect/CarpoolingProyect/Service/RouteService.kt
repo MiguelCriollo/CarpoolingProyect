@@ -4,9 +4,9 @@ import CarpoolingProyect.CarpoolingProyect.Dto.SuccessfulCreation
 import CarpoolingProyect.CarpoolingProyect.Dto.SuccessfulResponse
 import CarpoolingProyect.CarpoolingProyect.Exceptions.NotFoundResponse
 import CarpoolingProyect.CarpoolingProyect.Model.Route
-import CarpoolingProyect.CarpoolingProyect.Repository.DriverRepository
-import CarpoolingProyect.CarpoolingProyect.Repository.RouteRepository
-import CarpoolingProyect.CarpoolingProyect.Repository.UserRepository
+import CarpoolingProyect.CarpoolingProyect.Model.RouteStopRequest
+import CarpoolingProyect.CarpoolingProyect.Model.Stop
+import CarpoolingProyect.CarpoolingProyect.Repository.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -16,6 +16,9 @@ import org.springframework.web.server.ResponseStatusException
 @Service
 class RouteService {
     @Autowired
+    lateinit var stopRepository: StopRepository
+
+    @Autowired
     private lateinit var userRepository: UserRepository
 
     @Autowired
@@ -24,17 +27,17 @@ class RouteService {
     @Autowired
     lateinit var driverRepository: DriverRepository
 
+    @Autowired
+    lateinit var routeStopRepository: RouteStopRepository
     //Basic Cruds
     fun listAllUsers():List<Route>{
         return routeRepository.findAll()
     }
 
     fun listUserRoutes(id:Long):SuccessfulResponse{
-        val user=userRepository.findById(id).get()
-        val allo= user.driver!!.route
-        val userRoutes=routeRepository.findByDriverId(user.driver!!.id)
+        val userRoutes=userRepository.findById(id).get().driver!!.route
         if(userRoutes.isNotEmpty()){
-            return SuccessfulResponse(data = userRoutes)
+            return SuccessfulResponse(data = ArrayList(userRoutes))
         }else{
             throw NotFoundResponse(message = "El usuario no tiene rutas creadas")
         }
@@ -49,6 +52,30 @@ class RouteService {
         routeRepository.save(route)
         return SuccessfulCreation(message = "Routa Creada Exitosamente")
 
+    }
+
+    @Transactional
+    fun addRouteStops(id:Long,routeStopRequest: RouteStopRequest):SuccessfulCreation{
+        val user=userRepository.findById(id).get()
+        val userRoutes= user.driver!!.route
+        val requestedStops=routeStopRequest.routeStops
+        if(userRoutes.isNotEmpty()){
+            if (userRoutes.any{it.id==routeStopRequest.routeId}){
+                val userRoute=routeRepository.findById(routeStopRequest.routeId).get()
+                var stop: Stop?;
+                requestedStops.forEach {
+                    it.route=userRoute
+                    stop=stopRepository.findById(it.stopId)
+                    it.stop=stop
+                }
+                routeStopRepository.saveAll(requestedStops)
+                userRoute.routeStop.addAll(requestedStops)
+                routeRepository.save(userRoute)
+                return SuccessfulCreation(message = "User Route Creada Correctamente")
+            }
+            throw NotFoundResponse(message = "El id de Ruta no Pertenece al Usuario o no Existe")
+        }
+        throw NotFoundResponse(message = "El usuario no tiene rutas creadas")
     }
 
     fun update(user: Route): Route {

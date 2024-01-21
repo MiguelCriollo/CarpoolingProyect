@@ -3,6 +3,7 @@ package CarpoolingProyect.CarpoolingProyect.Model
 import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotNull
 import java.util.Date
 import kotlin.jvm.Transient
 
@@ -15,7 +16,7 @@ class RouteStop {
 
     var position: Long? = null
 
-    @NotBlank(message = "La hora de llegada es obligatoria")
+    @NotNull(message = "La hora de llegada es obligatoria")
     @Column(name="arrive_hour")
     var arriveHour: Date? = null
 
@@ -30,5 +31,5 @@ class RouteStop {
     var route: Route? = null
 
     @Transient
-    var routeId:Long?=null
+    var stopId:Long?=null
 }
