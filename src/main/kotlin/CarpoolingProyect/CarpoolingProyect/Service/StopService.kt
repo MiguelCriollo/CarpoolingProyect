@@ -9,7 +9,14 @@ import org.springframework.stereotype.Service
 class StopService {
     @Autowired
     lateinit var stopRepository: StopRepository
-    fun findAll() = stopRepository.findAll()
+    fun listAll(searchTerm:String?): List<Stop> {
+        if (!searchTerm.isNullOrEmpty()){
+            return stopRepository.findStopsByName(searchTerm)
+        }
+        return stopRepository.findAll()
+    }
+
+
     fun findById(id: Long) = stopRepository.findById(id)
     fun save(stop: Stop) = stopRepository.save(stop)
     fun delete(id: Long) = stopRepository.deleteById(id)

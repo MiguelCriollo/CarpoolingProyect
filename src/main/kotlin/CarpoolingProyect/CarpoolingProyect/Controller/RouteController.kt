@@ -3,6 +3,10 @@ package CarpoolingProyect.CarpoolingProyect.Controller
 import CarpoolingProyect.CarpoolingProyect.Model.Route
 import CarpoolingProyect.CarpoolingProyect.Service.DriverService
 import CarpoolingProyect.CarpoolingProyect.Service.RouteService
+import CarpoolingProyect.CarpoolingProyect.Service.TokenService
+import CarpoolingProyect.CarpoolingProyect.utils.getJwtCookie
+import jakarta.servlet.http.Cookie
+import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -11,6 +15,9 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/route")
 class RouteController {
     @Autowired
+    private lateinit var tokenService: TokenService
+
+    @Autowired
     lateinit var routeService: RouteService
 
     @GetMapping()
@@ -18,9 +25,18 @@ class RouteController {
         return ResponseEntity(routeService.listAllUsers(), HttpStatus.OK)
     }
 
+    @GetMapping("/userRoutes")
+    fun getUserRoutes(requestServer: HttpServletRequest):ResponseEntity<*>{
+        var jwt: Cookie = getJwtCookie(requestServer)
+        var decodedId=tokenService.verify(jwt.value).subject.toLong()
+        return ResponseEntity(routeService.listUserRoutes(decodedId),HttpStatus.OK)
+    }
+
     @PostMapping()
-    fun createUser(@RequestBody user: Route): ResponseEntity<Route> {
-        return ResponseEntity(routeService.saveUser(user), HttpStatus.OK)
+    fun createRoute(@RequestBody route: Route,requestServer: HttpServletRequest): ResponseEntity<*> {
+        var jwt: Cookie = getJwtCookie(requestServer)
+        var decodedId=tokenService.verify(jwt.value).subject.toLong()
+        return ResponseEntity(routeService.saveRoute(route,decodedId), HttpStatus.OK)
     }
 
 

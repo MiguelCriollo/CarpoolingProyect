@@ -1,17 +1,12 @@
 package CarpoolingProyect.CarpoolingProyect.Controller
 
 import CarpoolingProyect.CarpoolingProyect.Model.Stop
+import CarpoolingProyect.CarpoolingProyect.Model.User
 import CarpoolingProyect.CarpoolingProyect.Service.StopService
+import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.query.Param
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PatchMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/stops")
@@ -20,13 +15,13 @@ class StopController {
     lateinit var stopService: StopService
 
     @GetMapping
-    fun findAll() = stopService.findAll()
+    fun listAll(@RequestParam searchTerm: String?) = stopService.listAll(searchTerm)
 
     @GetMapping("/{id}")
     fun findById(@PathVariable id: Long) = stopService.findById(id)
 
-    @PostMapping
-    fun save(stop: Stop) = stopService.save(stop)
+    @PostMapping()
+    fun save(@Valid @RequestBody stop: Stop) = stopService.save(stop)
 
     @DeleteMapping
     fun delete(id: Long) = stopService.delete(id)

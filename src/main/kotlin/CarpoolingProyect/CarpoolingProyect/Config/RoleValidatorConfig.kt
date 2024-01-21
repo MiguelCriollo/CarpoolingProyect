@@ -19,7 +19,7 @@ class RoleValidatorConfig {
             listOf(Roles.USER))
 
         val allowedMethods = listOf(HttpMethod.POST.toString())
-        registrationBean.addUrlPatterns("/stops/*")
+        registrationBean.addUrlPatterns("/stopsa/*")
 
         return  registrationBean
     }

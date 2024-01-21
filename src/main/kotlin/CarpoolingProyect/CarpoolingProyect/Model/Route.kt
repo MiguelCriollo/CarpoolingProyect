@@ -3,6 +3,7 @@ package CarpoolingProyect.CarpoolingProyect.Model
 import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotNull
 import java.util.Date
 
 @Entity
@@ -17,16 +18,18 @@ class Route {
     @Column(name = "name")
     var name:String?=null
 
-    @NotBlank(message = "La fecha de inicio es obligatoria")
+    @NotNull(message = "La fecha de inicio es obligatoria")
     @Column(name="start_date")
     var startDate:Date?=null
 
     @Column(name="description")
     var description:String?=null
 
-    //@JsonIgnore
-    @Column(name="driver_id")
-    var driverId:Long?=null
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "driver_id",referencedColumnName = "id")
+    var driver:Driver?=null
 
     @JsonIgnore
     @OneToMany(mappedBy = "route",cascade = [CascadeType.ALL], orphanRemoval = true)
