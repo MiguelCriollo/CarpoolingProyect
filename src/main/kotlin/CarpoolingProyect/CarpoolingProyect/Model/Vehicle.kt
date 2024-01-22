@@ -24,9 +24,9 @@ class Vehicle {
     @Column(name="model")
     var model: String? = null
 
-    //@JsonIgnore
-    @NotBlank(message="Campo obligatorio") //validate
-    @Column(name="driver_id")
-    var driverId: Long? = null
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "driver_id",referencedColumnName = "id")
+    var driver: Driver? = null
 
 }

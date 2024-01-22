@@ -4,6 +4,7 @@ import CarpoolingProyect.CarpoolingProyect.Model.Driver
 import CarpoolingProyect.CarpoolingProyect.Service.DriverService
 import CarpoolingProyect.CarpoolingProyect.Service.TokenService
 import CarpoolingProyect.CarpoolingProyect.Dto.BasicErrorResponse
+import CarpoolingProyect.CarpoolingProyect.Dto.DriverCreationRequest
 import CarpoolingProyect.CarpoolingProyect.utils.getJwtCookie
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletRequest
@@ -32,11 +33,11 @@ class DriverController {
         return ResponseEntity(driverService.saveUser(user),HttpStatus.OK)
     }
 
+
     @PostMapping("/createDriver")
-    fun createDriver(requestServer: HttpServletRequest, @RequestBody driver: Driver):ResponseEntity<BasicErrorResponse>{
-        var setso: Cookie = getJwtCookie(requestServer);
-        var decoded=tokenService.verify(setso.value).subject.toLong()
-        return ResponseEntity(driverService.createDriver(decoded,driver),HttpStatus.OK)
+    fun createDriver(requestServer: HttpServletRequest, @RequestBody driverCreationRequest: DriverCreationRequest):ResponseEntity<BasicErrorResponse>{
+        val decodedId= tokenService.getJwtId(requestServer)
+        return ResponseEntity(driverService.createDriver(decodedId,driverCreationRequest),HttpStatus.OK)
     }
 
     @GetMapping("/testDriver")

@@ -4,7 +4,9 @@ import CarpoolingProyect.CarpoolingProyect.Model.Driver
 import CarpoolingProyect.CarpoolingProyect.Repository.DriverRepository
 import CarpoolingProyect.CarpoolingProyect.Repository.UserRepository
 import CarpoolingProyect.CarpoolingProyect.Dto.BasicErrorResponse
+import CarpoolingProyect.CarpoolingProyect.Dto.DriverCreationRequest
 import CarpoolingProyect.CarpoolingProyect.Model.User
+import CarpoolingProyect.CarpoolingProyect.Repository.VehicleRepository
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -21,6 +23,8 @@ class DriverService {
     @Autowired
     lateinit var userRepository: UserRepository
 
+    @Autowired
+    lateinit var vehicleRepository: VehicleRepository
     //Basic Cruds
     fun listAllUsers():List<Driver>{
         return driverRepository.findAll()
@@ -36,13 +40,16 @@ class DriverService {
         userRepository.save(user)
     }
     @Transactional
-    fun createDriver(userId:Long,driver: Driver): BasicErrorResponse {
+    fun createDriver(userId:Long,driverCreationRequest: DriverCreationRequest): BasicErrorResponse {
         val user=userRepository.findById(userId).get()
-
+        val vehicle=driverCreationRequest.vehicle
+        val driver=driverCreationRequest.driver
             user.driver=driver
             driver.user=user
+            vehicle.driver=driver
             driverRepository.save(driver)
             userRepository.save(user)
+            vehicleRepository.save(vehicle)
             return BasicErrorResponse(
                 timestamp = LocalDateTime.now().toString(),
                 status = HttpStatus.OK.value(),

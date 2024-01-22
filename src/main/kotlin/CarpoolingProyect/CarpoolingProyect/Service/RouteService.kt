@@ -4,7 +4,7 @@ import CarpoolingProyect.CarpoolingProyect.Dto.SuccessfulCreation
 import CarpoolingProyect.CarpoolingProyect.Dto.SuccessfulResponse
 import CarpoolingProyect.CarpoolingProyect.Exceptions.NotFoundResponse
 import CarpoolingProyect.CarpoolingProyect.Model.Route
-import CarpoolingProyect.CarpoolingProyect.Model.RouteStopRequest
+import CarpoolingProyect.CarpoolingProyect.Dto.RouteStopRequest
 import CarpoolingProyect.CarpoolingProyect.Model.Stop
 import CarpoolingProyect.CarpoolingProyect.Repository.*
 import org.springframework.beans.factory.annotation.Autowired

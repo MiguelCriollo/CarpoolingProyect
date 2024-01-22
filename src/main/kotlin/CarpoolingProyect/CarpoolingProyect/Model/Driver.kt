@@ -16,12 +16,16 @@ class Driver {
     @Column(name="driver_licence")
     var driverLicence: String? = null
 
-    //@JsonIgnore
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "user_id",referencedColumnName = "id")
     var user:User?=null
 
-    //@JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "driver",cascade = [CascadeType.ALL], orphanRemoval = true)
     var route:MutableSet<Route> = mutableSetOf()
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "driver",cascade = [CascadeType.ALL], orphanRemoval = true)
+    var vehicle:Vehicle?=null
 }

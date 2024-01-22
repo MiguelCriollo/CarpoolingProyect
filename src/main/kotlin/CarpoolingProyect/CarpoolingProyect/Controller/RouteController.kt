@@ -1,12 +1,9 @@
 package CarpoolingProyect.CarpoolingProyect.Controller
 
 import CarpoolingProyect.CarpoolingProyect.Model.Route
-import CarpoolingProyect.CarpoolingProyect.Model.RouteStopRequest
-import CarpoolingProyect.CarpoolingProyect.Service.DriverService
+import CarpoolingProyect.CarpoolingProyect.Dto.RouteStopRequest
 import CarpoolingProyect.CarpoolingProyect.Service.RouteService
 import CarpoolingProyect.CarpoolingProyect.Service.TokenService
-import CarpoolingProyect.CarpoolingProyect.utils.getJwtCookie
-import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
