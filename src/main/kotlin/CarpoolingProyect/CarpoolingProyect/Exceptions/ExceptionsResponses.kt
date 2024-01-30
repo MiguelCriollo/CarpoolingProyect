@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ResponseStatus
 import java.io.Serializable
 import java.lang.RuntimeException
+open class BasisErrorException(message: String) : RuntimeException(message)
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
 data class NotFoundResponse(
@@ -18,3 +19,4 @@ data class ErrorResponse(
     val error: String="",
     val message: String=""
 )
+
