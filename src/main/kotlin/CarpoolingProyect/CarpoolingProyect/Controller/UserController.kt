@@ -1,9 +1,11 @@
 package CarpoolingProyect.CarpoolingProyect.Controller
 
 import CarpoolingProyect.CarpoolingProyect.Model.User
+import CarpoolingProyect.CarpoolingProyect.Service.AuthService
 import CarpoolingProyect.CarpoolingProyect.Service.TokenService
 import CarpoolingProyect.CarpoolingProyect.Service.UserService
 import CarpoolingProyect.CarpoolingProyect.utils.getJwtCookie
+import CarpoolingProyect.CarpoolingProyect.utils.parseRegisterDtoToUser
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.Valid
@@ -19,6 +21,9 @@ import org.springframework.web.bind.annotation.*
 @Validated
 class UserController {
     @Autowired
+    private lateinit var authService: AuthService
+
+    @Autowired
     lateinit var userService: UserService
 
     @Autowired
@@ -30,6 +35,10 @@ class UserController {
         return ResponseEntity(userService.listAllUsers(),HttpStatus.OK)
     }
 
+    @PostMapping("/create-user")
+    fun createUser2(@Valid @RequestBody user: User):ResponseEntity<*>{
+        return ResponseEntity(authService.signUp(user),HttpStatus.OK)
+    }
     @PostMapping()
     fun createUser(@Valid @RequestBody user:User):ResponseEntity<User>{
         return ResponseEntity(userService.saveUser(user),HttpStatus.OK)

@@ -1,5 +1,6 @@
 package CarpoolingProyect.CarpoolingProyect.Controller
 
+import CarpoolingProyect.CarpoolingProyect.Exceptions.BasisErrorException
 import CarpoolingProyect.CarpoolingProyect.Exceptions.ErrorResponse
 import CarpoolingProyect.CarpoolingProyect.Exceptions.NotFoundResponse
 import jakarta.servlet.http.HttpServletRequest
