@@ -42,9 +42,6 @@ class DriverService {
     @Transactional
     fun createDriver(userId:Long,driverCreationRequest: DriverCreationRequest): BasicErrorResponse {
         val user=userRepository.findById(userId).get()
-//        if(user.driver == null){
-//
-//        }
         val vehicle=driverCreationRequest.vehicle
         val driver=driverCreationRequest.driver
             user.driver=driver
