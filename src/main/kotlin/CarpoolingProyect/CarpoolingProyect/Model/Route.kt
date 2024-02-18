@@ -31,7 +31,6 @@ class Route {
     @JoinColumn(name = "driver_id",referencedColumnName = "id")
     var driver:Driver?=null
 
-    @JsonIgnore
     @OneToMany(mappedBy = "route",cascade = [CascadeType.ALL], orphanRemoval = true)
     var routeStop:MutableSet<RouteStop> = mutableSetOf()
 }

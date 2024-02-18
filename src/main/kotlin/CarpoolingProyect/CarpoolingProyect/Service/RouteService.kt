@@ -43,14 +43,14 @@ class RouteService {
         }
     }
     @Transactional
-    fun saveRoute(route: Route,id: Long): SuccessfulCreation {
+    fun saveRoute(route: Route,id: Long): Route {
         val user=userRepository.findById(id).get()
         val driver=driverRepository.findById(user.driver!!.id)
         driver!!.route.add(route)
         route.driver=driver
         driverRepository.save(driver)
-        routeRepository.save(route)
-        return SuccessfulCreation(message = "Routa Creada Exitosamente")
+
+        return routeRepository.save(route)
 
     }
 
