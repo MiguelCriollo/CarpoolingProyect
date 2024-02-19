@@ -36,11 +36,9 @@ class RouteService {
 
     fun listUserRoutes(id:Long):SuccessfulResponse{
         val userRoutes=userRepository.findById(id).get().driver!!.route
-        if(userRoutes.isNotEmpty()){
-            return SuccessfulResponse(data = ArrayList(userRoutes))
-        }else{
-            throw NotFoundResponse(message = "El usuario no tiene rutas creadas")
-        }
+
+        return SuccessfulResponse(data = ArrayList(userRoutes))
+
     }
     @Transactional
     fun saveRoute(route: Route,id: Long): Route {
