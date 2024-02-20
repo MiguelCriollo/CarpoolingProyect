@@ -1,6 +1,8 @@
 package CarpoolingProyect.CarpoolingProyect.Model
 import CarpoolingProyect.CarpoolingProyect.Config.Views
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import com.fasterxml.jackson.annotation.JsonView
 import jakarta.persistence.*
 import jakarta.validation.constraints.Email
@@ -68,7 +70,7 @@ class User {
         return BCryptPasswordEncoder().matches(password, this.password)
     }
 
-    @JsonIgnore
+    @JsonManagedReference
     @OneToOne(mappedBy = "user",cascade = [CascadeType.ALL], orphanRemoval = true)
     var driver:Driver?=null
 

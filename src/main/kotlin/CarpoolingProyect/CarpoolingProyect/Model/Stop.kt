@@ -1,5 +1,6 @@
 package CarpoolingProyect.CarpoolingProyect.Model
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
@@ -19,7 +20,7 @@ class Stop {
     @NotBlank(message = "La descripcion es obligatoria")
     var description: String? = null
 
-    @JsonIgnore
+    @JsonBackReference
     @OneToMany(mappedBy = "stop",cascade = [CascadeType.ALL], orphanRemoval = true)
     var routeStop:MutableSet<RouteStop> = mutableSetOf()
 }

@@ -1,6 +1,8 @@
 package CarpoolingProyect.CarpoolingProyect.Model
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
@@ -20,12 +22,12 @@ class RouteStop {
     @Column(name="arrive_hour")
     var arriveHour: Date? = null
 
-    @JsonIgnore
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "stop_id")
     var stop: Stop? = null
 
-    @JsonIgnore
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "route_id")
     var route: Route? = null

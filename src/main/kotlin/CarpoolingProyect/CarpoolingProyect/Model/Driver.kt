@@ -1,6 +1,8 @@
 package CarpoolingProyect.CarpoolingProyect.Model
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.*
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
@@ -16,16 +18,16 @@ class Driver {
     @Column(name="driver_licence")
     var driverLicence: String? = null
 
-    @JsonIgnore
+    @JsonBackReference
     @OneToOne
     @JoinColumn(name = "user_id",referencedColumnName = "id")
     var user:User?=null
 
-    @JsonIgnore
+    @JsonManagedReference
     @OneToMany(mappedBy = "driver",cascade = [CascadeType.ALL], orphanRemoval = true)
     var route:MutableSet<Route> = mutableSetOf()
 
-    @JsonIgnore
+    @JsonManagedReference
     @OneToOne(mappedBy = "driver",cascade = [CascadeType.ALL], orphanRemoval = true)
     var vehicle:Vehicle?=null
 }

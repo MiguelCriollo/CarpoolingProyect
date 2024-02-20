@@ -1,5 +1,6 @@
 package CarpoolingProyect.CarpoolingProyect.Model
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
@@ -24,7 +25,7 @@ class Vehicle {
     @Column(name="model")
     var model: String? = null
 
-    @JsonIgnore
+    @JsonBackReference
     @OneToOne
     @JoinColumn(name = "driver_id",referencedColumnName = "id")
     var driver: Driver? = null

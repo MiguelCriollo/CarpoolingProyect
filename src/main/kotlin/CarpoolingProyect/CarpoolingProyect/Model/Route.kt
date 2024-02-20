@@ -1,6 +1,8 @@
 package CarpoolingProyect.CarpoolingProyect.Model
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
@@ -26,11 +28,12 @@ class Route {
     var description:String?=null
 
 
-    @JsonIgnore
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "driver_id",referencedColumnName = "id")
     var driver:Driver?=null
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "route",cascade = [CascadeType.ALL], orphanRemoval = true)
     var routeStop:MutableSet<RouteStop> = mutableSetOf()
 }
